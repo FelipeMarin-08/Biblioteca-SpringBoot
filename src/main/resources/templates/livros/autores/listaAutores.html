@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Autores</title>
+</head>
+<body>
+
+<h1>Lista de Autores</h1>
+
+<p th:if="${#lists.isEmpty(Autores)}">
+    Nenhum autor cadastrado.
+</p>
+
+<ul>
+    <li th:each="autor : ${Autores}">
+
+        <strong>Nome:</strong>
+        <span th:text="${autor.nome}"></span>
+
+        <br>
+
+        <strong>Nacionalidade:</strong>
+        <span th:text="${autor.nacionalidade}"></span>
+
+        <br><br>
+
+    </li>
+</ul>
+
+<a th:href="@{/livros/autores/autorFormulario}">
+    Cadastrar novo autor
+</a>
+
+<br><br>
+
+<a th:href="@{/livros}">
+    Voltar para o início
+</a>
+
+</body>
+</html>

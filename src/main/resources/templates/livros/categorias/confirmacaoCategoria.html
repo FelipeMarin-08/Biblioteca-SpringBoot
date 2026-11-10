@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação de Categoria</title>
+</head>
+<body>
+
+<h1>Confirmação de Categoria</h1>
+
+<p>Nome: <span th:text="${categoria.nome}"></span></p>
+<p>ID: <span th:text="${categoria.id}"></span></p>
+
+<p>Categoria cadastrada com sucesso!</p>
+
+<a th:href="@{/livros}">Voltar para a lista de livros</a>
+
+</body>
+</html>

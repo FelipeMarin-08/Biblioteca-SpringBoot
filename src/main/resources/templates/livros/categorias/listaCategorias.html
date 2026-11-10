@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Categorias</title>
+</head>
+<body>
+
+<h1>Lista de Categorias</h1>
+
+<p th:if="${#lists.isEmpty(Categorias)}">
+    Nenhuma categoria cadastrada.
+</p>
+
+<ul>
+    <li th:each="categoria, status : ${Categorias}">
+
+        <strong>Nome:</strong>
+        <span th:text="${categoria.nome}"></span>
+
+        <br>
+
+        <strong>ID:</strong>
+        <span th:text="${categoria.id}"></span>
+
+        <br><br>
+
+        <form th:action="@{/livros/categorias/excluir/{indice}(indice=${status.index})}"
+              method="get">
+            <button type="submit">Excluir</button>
+        </form>
+
+        <br>
+
+    </li>
+</ul>
+
+<a th:href="@{/livros/categorias/categoriaFormulario}">
+    Cadastrar nova categoria
+</a>
+
+<br><br>
+
+<a th:href="@{/livros}">
+    Voltar para o início
+</a>
+
+</body>
+</html>
