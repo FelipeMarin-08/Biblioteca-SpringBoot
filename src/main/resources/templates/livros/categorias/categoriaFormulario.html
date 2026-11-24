@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -6,9 +5,13 @@
     <title>Formulário de Categoria</title>
 </head>
 <body>
-<h1>Formulário de Categoria</h1>
 
-<form th:action="@{/livros/categorias}" th:object="${categoria}" method="post">
+<h1 th:text="${indice == null ? 'Formulário de Categoria' : 'Editar Categoria'}"></h1>
+
+<form th:action="${indice == null} ?
+      @{/livros/categorias} :
+      @{/livros/categorias/atualizar/{indice}(indice=${indice})}"
+      th:object="${categoria}" method="post">
 
     <label for="nome">Nome:</label>
     <input type="text" id="nome" th:field="*{nome}" required>
@@ -22,7 +25,10 @@
     <br>
     <br>
 
-    <button type="submit">Cadastrar</button>
+    <button type="submit"
+            th:text="${indice == null ? 'Cadastrar' : 'Atualizar'}">
+    </button>
+
 </form>
 
 </body>

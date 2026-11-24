@@ -8,17 +8,20 @@
 <nav>
     <a th:href="@{/livros}">Livros</a>
     <br>
+    <p>Gerenciar livros:</p>
     <a th:href="@{/livros/formulario}">Cadastrar livro novo</a>
     <br>
     <a th:href="@{/livros/lista}">Listar livros</a>
     <br>
+    <p>Gerenciar autores:</p>
     <a th:href="@{/livros/autores/autorFormulario}">Cadastrar autor</a>
     <br>
+    <a th:href="@{/livros/autores/listarAutores}">Listar autores</a>
+    <br>
+    <p>Gerenciar categorias:</p>
     <a th:href="@{/livros/categorias/categoriaFormulario}">Cadastrar categoria</a>
     <br>
     <a th:href="@{/livros/categorias/listarCategorias}">Listar categorias</a>
-    <br>
-    <a th:href="@{/livros/autores/listarAutores}">Listar autores</a>
 </nav>
 </body>
 </html>

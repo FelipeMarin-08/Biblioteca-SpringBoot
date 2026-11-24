@@ -1,4 +1,3 @@
-
 package com.ger.biblioteca.biblioteca.controller;
 
 import com.ger.biblioteca.biblioteca.model.Autor;
@@ -36,5 +35,35 @@ public class AutorController {
     public String listarAutores(Model model) {
         model.addAttribute("Autores", Autores);
         return "livros/autores/listaAutores";
+    }
+
+    @GetMapping("/excluir/{indice}")
+    public String excluirAutor(
+            @PathVariable("indice") int indice) {
+
+        Autores.remove(indice);
+
+        return "redirect:/livros/autores/listarAutores";
+    }
+
+    @GetMapping("/editar/{indice}")
+    public String editarAutor(
+            @PathVariable("indice") int indice,
+            Model model) {
+
+        model.addAttribute("autor", Autores.get(indice));
+        model.addAttribute("indice", indice);
+
+        return "livros/autores/autorFormulario";
+    }
+
+    @PostMapping("/atualizar/{indice}")
+    public String atualizarAutor(
+            @PathVariable("indice") int indice,
+            @ModelAttribute("autor") Autor autor) {
+
+        Autores.set(indice, autor);
+
+        return "redirect:/livros/autores/listarAutores";
     }
 }

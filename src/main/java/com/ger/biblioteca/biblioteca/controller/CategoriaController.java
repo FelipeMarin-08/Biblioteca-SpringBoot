@@ -1,4 +1,3 @@
-
 package com.ger.biblioteca.biblioteca.controller;
 
 import com.ger.biblioteca.biblioteca.model.Categoria;
@@ -39,8 +38,32 @@ public class CategoriaController {
     }
 
     @GetMapping("/excluir/{indice}")
-    public String excluirCategoria(@PathVariable("indice") int indice) {
+    public String excluirCategoria(
+            @PathVariable("indice") int indice) {
+
         Categorias.remove(indice);
+
+        return "redirect:/livros/categorias/listarCategorias";
+    }
+
+    @GetMapping("/editar/{indice}")
+    public String editarCategoria(
+            @PathVariable("indice") int indice,
+            Model model) {
+
+        model.addAttribute("categoria", Categorias.get(indice));
+        model.addAttribute("indice", indice);
+
+        return "livros/categorias/categoriaFormulario";
+    }
+
+    @PostMapping("/atualizar/{indice}")
+    public String atualizarCategoria(
+            @PathVariable("indice") int indice,
+            @ModelAttribute("categoria") Categoria categoria) {
+
+        Categorias.set(indice, categoria);
+
         return "redirect:/livros/categorias/listarCategorias";
     }
 }

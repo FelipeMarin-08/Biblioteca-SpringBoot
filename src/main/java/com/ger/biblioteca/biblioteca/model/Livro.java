@@ -1,12 +1,18 @@
 package com.ger.biblioteca.biblioteca.model;
 
 import java.util.*;
+import jakarta.persistence.*;
 
+@Entity
 public class Livro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String titulo;
     private String autor;
     private String isbn;
-
 
     public Livro(String titulo, String autor, String isbn) {
         this.titulo = titulo;
@@ -15,6 +21,14 @@ public class Livro {
     }
 
     public Livro() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {

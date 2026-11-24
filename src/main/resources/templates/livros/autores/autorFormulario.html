@@ -6,17 +6,27 @@
 </head>
 <body>
 
-<h1>Cadastro de Autor</h1>
-<form th:action="@{/livros/autores}" th:object="${autor}" method="post">
+<h1 th:text="${indice == null ? 'Cadastro de Autor' : 'Editar Autor'}"></h1>
+
+<form th:action="${indice == null} ?
+      @{/livros/autores} :
+      @{/livros/autores/atualizar/{indice}(indice=${indice})}"
+      th:object="${autor}" method="post">
+
     <label for="nome">Nome:</label>
     <input type="text" id="nome" th:field="*{nome}" required>
     <br>
     <br>
+
     <label for="nacionalidade">Nacionalidade:</label>
     <input type="text" id="nacionalidade" th:field="*{nacionalidade}" required>
     <br>
     <br>
-    <button type="submit">Cadastrar</button>
+
+    <button type="submit"
+            th:text="${indice == null ? 'Cadastrar' : 'Atualizar'}">
+    </button>
+
 </form>
 
 </body>

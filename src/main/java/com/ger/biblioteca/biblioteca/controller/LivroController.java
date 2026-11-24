@@ -1,12 +1,15 @@
-
 package com.ger.biblioteca.biblioteca.controller;
 
+import com.ger.biblioteca.biblioteca.repository.LivroRepository;
 import com.ger.biblioteca.biblioteca.model.Livro;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -14,6 +17,15 @@ import java.util.List;
 public class LivroController {
 
     private final List<Livro> livros = new ArrayList<>();
+    private final LivroRepository repository;
+
+    public LivroController(LivroRepository repository) {
+        this.repository = repository;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // Página inicial
     @GetMapping
@@ -33,6 +45,8 @@ public class LivroController {
     public String cadastrarLivro(
             @ModelAttribute("livro") Livro livro) {
 
+        repository.save(livro);
+
         livros.add(livro);
 
         System.out.println("Título: " + livro.getTitulo());
@@ -45,14 +59,54 @@ public class LivroController {
     // Listar todos os livros cadastrados
     @GetMapping("/lista")
     public String listar(Model model) {
+
+        livros.clear();
+        livros.addAll(repository.findAll());
+
         model.addAttribute("livros", livros);
+
         return "livros/lista";
     }
 
+    // Excluir um livro
+    @GetMapping("/livros/excluir/{id}")
+    public String excluirLivro(
+            @PathVariable("id") Long id) {
 
-    @GetMapping("/excluir/{indice}")
-    public String excluirLivro(@PathVariable("indice") int indice) {
-        livros.remove(indice);
+        repository.deleteById(id);
+
         return "redirect:/livros";
+    }
+
+    // Editar um livro
+    @GetMapping("/editar/{id}")
+    public String editarLivro(
+            @PathVariable("id") Long id,
+            Model model) {
+
+        Livro livro = repository.findById(id)
+                .orElseThrow();
+
+        model.addAttribute("livro", livro);
+
+        return "livros/formulario";
+    }
+
+    // Atualizar um livro
+    @PostMapping("/atualizar/{id}")
+    public String atualizarLivro(
+            @PathVariable("id") Long id,
+            @ModelAttribute("livro") Livro livro) {
+
+        Livro livroAtual = repository.findById(id)
+                .orElseThrow();
+
+        livroAtual.setTitulo(livro.getTitulo());
+        livroAtual.setAutor(livro.getAutor());
+        livroAtual.setIsbn(livro.getIsbn());
+
+        repository.save(livroAtual);
+
+        return "redirect:/livros/lista";
     }
 }

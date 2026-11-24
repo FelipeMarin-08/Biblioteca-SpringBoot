@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -14,7 +13,7 @@
 </p>
 
 <ul>
-    <li th:each="autor : ${Autores}">
+    <li th:each="autor, status : ${Autores}">
 
         <strong>Nome:</strong>
         <span th:text="${autor.nome}"></span>
@@ -25,6 +24,18 @@
         <span th:text="${autor.nacionalidade}"></span>
 
         <br><br>
+
+        <form th:action="@{/livros/autores/editar/{indice}(indice=${status.index})}"
+              method="get">
+            <button type="submit">Editar</button>
+        </form>
+
+        <form th:action="@{/livros/autores/excluir/{indice}(indice=${status.index})}"
+              method="get">
+            <button type="submit">Excluir</button>
+        </form>
+
+        <br>
 
     </li>
 </ul>
